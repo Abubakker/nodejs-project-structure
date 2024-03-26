@@ -1,0 +1,188 @@
+<!doctype html>
+<html ng-app>
+
+<head>
+    <meta charset="UTF-8">
+    <title>API console</title>
+    <link href="/console/css/bootstrap.css" rel="stylesheet">
+    <link href="/console/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/console/css/style.css" rel="stylesheet" />
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="/console/js/aes.js"></script>
+    <script src="/console/js/hmac-sha1.js"></script>
+    <script src="/console/js/md5.js"></script>
+    <script src="/console/js/pad-zeropadding-min.js"></script>
+    <script src="/console/js/enc-base64-min.js"></script>
+    <script src="/console/js/sha256-min.js"></script>
+    <script src="/console/js/bootstrap.min.js"></script>
+    <script src="/console/js/api-console.js"></script>
+</head>
+
+<body>
+
+    <div class="navbar navbar-static-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <a class="brand" href="#">API Console <span class="label label-info">Local</span></a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="">Console</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- .navbar -->
+
+    <div class="container" id="api-container" ng-controller="ApiConsoleCtrl">
+        <div class="row">
+            <div class="span3" id="api-list">
+                <div class="accordion" id="api">
+                    <div class="accordion-group" ng-repeat="group in apiInfo.groups">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#api"
+                                href="#api-group-{{$index}}">
+                                {{group.name}}
+                            </a>
+                        </div>
+                        <div id="api-group-{{$index}}" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <ul class="nav nav-list">
+                                    <li ng-repeat="apiName in group.contents" class="{{activeApiClass(apiName)}}">
+                                        <a ng-click="setApi(apiName)">
+                                            <i class="icon-chevron-right"></i>{{apiInfo[apiName].title}}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- .accordion-group -->
+                </div><!-- .accordion -->
+            </div><!-- .span3 (sidebar) -->
+
+            <div class="span9" id="api-content">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="control-group">
+                            <label for="method" class="control-label">Method</label>
+                            <div class="controls">
+                                <label class="radio inline"><input type="radio" ng-model="method" name="method"
+                                        value="GET" />GET</label>
+                                <label class="radio inline"><input type="radio" ng-model="method" name="method"
+                                        value="POST" />POST</label>
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            <label for="url" class="control-label">URL</label>
+                            <div class="controls">
+                                <input type="text" ng-model="url" name="url" value="" class="span7" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="queryParameter" class="control-label">Query Parameter</label>
+                            <div class="controls">
+                                <input type="text" ng-model="queryParameter" name="queryParameter" value=""
+                                    class="span7" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="api_key" class="control-label">API key</label>
+                            <div class="controls">
+                                <input type="text" ng-model="api_key" name="api_key" value="" class="span7" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="sessionId" class="control-label">Session Token</label>
+                            <div class="controls">
+                                <input type="text" ng-model="sessionId" name="sessionId" class="span5" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="refresh_token" class="control-label">Refresh Token</label>
+                            <div class="controls">
+                                <input type="text" ng-model="refresh_token" name="refresh_token" class="span5" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label for="userAgent" class="control-label">User Agent</label>
+                            <div class="controls">
+                                <input type="text" ng-model="userAgent" name="userAgent" class="span5" />
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="body" class="control-label">Body</label>
+                            <div class="controls">
+                                <textarea ng-model="requestBody" ng-disabled="method == 'GET'" name="requestBody"
+                                    rows="5" class="span7"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- 負荷テスト送信回数指定 -->
+                        <div class="control-group">
+                            <label for="userAgent" class="control-label">Send Times</label>
+                            <div class="controls">
+                                <input type="text" ng-model="sendTimes" name="sendTimes" value="1" class="span5" />
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button ng-click="callApi()" type="submit" class="btn btn-primary"
+                                id="submit">Submit</button>
+                        </div>
+                        <div class="control-group">
+
+                            <label for="salt" class="control-label">salt</label>
+                            <div class="controls">
+                                <input type="text" name="salt" class="span7" ng-model="salt" />
+                            </div>
+
+                            <label for="requestSignature" class="control-label">Request Signature(sign)</label>
+                            <div class="controls">
+                                <input type="text" name="requestSignature" class="span7" ng-model="requestSignature" />
+                            </div>
+                            <label for="baseString" class="control-label">Base String</label>
+                            <div class="controls">
+                                <input type="text" name="baseString" class="span7" ng-model="baseString" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+                <div class="tabbable">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#response-pane" data-toggle="tab">Response</a>
+                        </li>
+                        <li>
+                            <a href="#header-pane" data-toggle="tab">Header</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="response-pane">
+                            <pre ng-model="responseBody" id="response"
+                                class="alert {{response.statusClass}}">{{responseBody}}</pre>
+                        </div>
+                        <div class="tab-pane" id="header-pane">
+                            <pre id="header" class="alert {{response.statusClass}}" ng-model="responseHeader">
+                                    {{responseHeader}}
+                                </pre>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- .span9 (main) -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+
+</body>
+
+</html>

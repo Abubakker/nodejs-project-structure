@@ -1,0 +1,79 @@
+{
+    "android": {
+        "current_version": 10000,
+        "force_update": false,
+        "maintenance_mode": false,
+        "maintenance_time": {
+            "start": null,
+            "end": null
+        },
+        "client_update_location": "",
+        "server_base_time": true,
+        "production_env": "beta",
+        "check_req_token": 1,
+        "base_url": {
+            "10000": "https://[example].com",
+            "20000": "https://[example].com",
+            "30000":"https://[example].com"
+        },
+        "API_KEY": {
+            "10000": "ZmWAnFFXxqCNsSX2nQgJeTFSag6yzf5m",
+            "20000": "BqDsAfKNYULrvRzdmT5FCJ6TFuBWK2rv",
+            "30000": "eTGBMpxKX8VhymQy945RPSEkYhfG5xK7"
+        }
+    },
+    "ios": {
+        "current_version": 10000,
+        "pre_prod_version":30000,
+        "force_update": false,
+        "maintenance_mode": false,
+        "maintenance_time": {
+            "start": null,
+            "end": null
+        },
+        "client_update_location": "",
+        "server_base_time": true,
+        "production_env": "beta",
+        "check_req_token": 1,
+        "base_url": {
+            "10000": "https://[example].com",
+            "20000": "https://[example].com",
+            "30000":"https://[example].com"
+        },
+        "API_KEY": {
+            "10000": "S2EAvDUMMJfSShY6NbJ5gaALCeTgwcUB",
+            "20000": "bRWS5DX47Ltp5BMvfqGWk7q3W2tzMFq7",
+            "30000": "Y65GEeTJHnZHdFYutu4uLTQ4G3Ba4Ucb"
+        }
+    },
+    "web": {
+        "current_version": 40000,
+        "force_update": false,
+        "maintenance_mode": false,
+        "maintenance_time": {
+            "start": null,
+            "end": null
+        },
+        "server_base_time": true,
+        "production_env": "prod",
+        "check_req_token": 1,
+        "API_KEY": {
+            "40000": "DfLMRJf2rzcP4rfBknnveAY62duPVyJu"
+        }
+    },
+    "web-admin": {
+        "current_version": 50000,
+        "force_update": false,
+        "maintenance_mode": false,
+        "maintenance_time": {
+            "start": null,
+            "end": null
+        },
+        "server_base_time": true,
+        "production_env": "prod",
+        "check_req_token": 1,
+        "API_KEY": {
+            "40000": "DfLMRJf2rzcP4rfBknnveAY62duPVyJu"
+        }
+    }
+}

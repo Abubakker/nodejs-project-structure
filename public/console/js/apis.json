@@ -1,0 +1,137 @@
+{
+  "groups": [
+    {
+      "name": "Application Status",
+      "contents": ["get_base_url", "get_application_status"]
+    },
+    {
+      "name": "Authentication",
+      "contents": [
+        "signup",
+        "login",
+        "logout",
+        "refresh_token",
+        "check_user",
+        "password_reset_request",
+        "reset_password",
+        "register_notification_token"
+      ]
+    },
+    {
+      "name": "System Data",
+      "contents": [
+        "get_master_data_versions",
+        "get_master_data"
+      ]
+    }
+  ],
+
+  "signup": {
+    "title": "Sign Up",
+    "action": "/v1/auth/sign-up",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "password": "",
+      "confirm_password": "",
+      "uuid": ""
+    }
+  },
+  "login": {
+    "title": "Login",
+    "action": "/v1/auth/login",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "email": "",
+      "password": "",
+      "uuid": "23425007-078f-471f-9e76-e3b5cbddee84"
+    }
+  },
+  "refresh_token": {
+    "title": "Refresh Token",
+    "action": "/v1/auth/refresh-token",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": ""
+  },
+  "check_user": {
+    "title": "Check User",
+    "action": "/v1/auth/check-user",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "email": ""
+    }
+  },
+
+  "password_reset_request": {
+    "title": "Password Reset Request",
+    "action": "/v1/auth/password-reset-request",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "mobile": ""
+    }
+  },
+  "reset_password": {
+    "title": "Reset Password",
+    "action": "/v1/auth/reset-password",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "old_password": "",
+      "new_password": "",
+      "confirm_password": ""
+    }
+  },
+  
+  "register_notification_token": {
+    "title": "Firebase Token Register",
+    "action": "/v1/auth/register-notification-token",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": {
+      "token": ""
+    }
+  },
+  "get_base_url": {
+    "title": "Get Base URL",
+    "action": "/v1/get-application-base-url",
+    "query": "client_type=1&client_version=10000",
+    "method": "GET",
+    "json": ""
+  },
+  "get_application_status": {
+    "title": "Get Application Status",
+    "action": "/v1/get-application-status",
+    "query": "client_type=1&client_version=10000",
+    "method": "GET",
+    "json": ""
+  },
+  "logout": {
+    "title": "Logout",
+    "action": "/v1/auth/logout",
+    "query": "client_type=1&client_version=10000",
+    "method": "POST",
+    "json": ""
+  },
+  "get_master_data_versions": {
+    "title": "Get Master Data Versions",
+    "action": "/v1/get-master-data",
+    "query": "client_type=1&client_version=10000",
+    "method": "GET",
+    "json": ""
+  },
+ 
+  "get_master_data": {
+    "title": "Get Master Data",
+    "action": "/v1/get-master-data",
+    "query": "client_type=1&client_version=10000&data=",
+    "method": "GET",
+    "json": ""
+  }
+}
